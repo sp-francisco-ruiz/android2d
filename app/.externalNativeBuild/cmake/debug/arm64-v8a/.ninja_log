@@ -1,0 +1,14 @@
+# ninja log v5
+2	270	0	CMakeFiles/native-lib.dir/src/main/cpp/engine/collider.cpp.o	bf642e11aac3eafe
+270	445	0	CMakeFiles/native-lib.dir/src/main/cpp/utils/clock.cpp.o	ec511903fc180491
+4	854	0	CMakeFiles/native-lib.dir/src/main/cpp/engine/sprite.cpp.o	b03bfbf2b72f9153
+855	962	0	CMakeFiles/native-lib.dir/src/main/cpp/utils/mat4.cpp.o	a078a44c5b8bb745
+1	1016	0	CMakeFiles/native-lib.dir/src/main/cpp/platform/texture.cpp.o	14ea5ab34a05790b
+962	1077	0	CMakeFiles/native-lib.dir/src/main/cpp/utils/vec3.cpp.o	9c003b3eea34acc1
+1016	1129	0	CMakeFiles/native-lib.dir/src/main/cpp/utils/vec4.cpp.o	e158dd2f3dcbbbfe
+0	1161	0	CMakeFiles/native-lib.dir/src/main/cpp/platform/native-lib.cpp.o	7c4c8857721e3655
+1	1389	0	CMakeFiles/native-lib.dir/src/main/cpp/platform/renderer.cpp.o	166b211e36bf33e9
+0	1444	0	CMakeFiles/native-lib.dir/src/main/cpp/platform/application.cpp.o	c3a23a527b321b14
+1077	1551	0	CMakeFiles/native-lib.dir/src/main/cpp/game/game.cpp.o	c3d01b774c90563f
+445	1743	0	CMakeFiles/native-lib.dir/src/main/cpp/utils/lodepng.cpp.o	6bb39fac108c2eda
+1743	2239	0	../../../../build/intermediates/cmake/debug/obj/arm64-v8a/libnative-lib.so	9f45279e1646cad3
