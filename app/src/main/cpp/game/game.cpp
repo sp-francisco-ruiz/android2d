@@ -8,10 +8,14 @@
 #include "game/game.h"
 #include "utils/logger.h"
 
+#include "engine/collider.h"
+
 const std::string LOG_TAG("Game");
 
 constexpr float G = -9.8f * 200.0f;
 constexpr  float kImpulse = 700.0f;
+
+engine::Collider circle, rect;
 
 namespace game
 {
@@ -33,6 +37,11 @@ namespace game
         _background.SetPosition(_width/2, _height/2);
         _background.SetDepth(2.0f);
         _playerVelocity = kImpulse;
+
+        circle.SetRadius(1000.0f);
+        rect.SetSize(200.0f, 200.0f);
+        circle.SetPosition(0.0f, 0.0f);
+        rect.SetPosition(300.0f, 300.0f);
     }
 
     void Game::Update(float deltaSeconds)

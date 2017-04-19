@@ -34,6 +34,8 @@ namespace engine
 
         bool CollidesWith(const Collider& other) const;
 
+        const utils::Vec4& GetAABB() const;
+
     protected:
 
         static bool CheckCircleCircle(const Collider& a, const Collider& b);

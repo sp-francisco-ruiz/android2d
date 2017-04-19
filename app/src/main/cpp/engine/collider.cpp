@@ -95,15 +95,17 @@ namespace engine
         return distance.LengthSq() < radius * radius;
     }
 
-    bool Collider::CheckCircleRect(const Collider &circle, const Collider &square)
+    bool Collider::CheckCircleRect(const Collider &circle, const Collider &rect)
     {
         float px = circle._position.x();
         float py = circle._position.y();
 
-        float rectMinX = square._position.x();
-        float rectMinY = square._position.y();
-        float rectMaxX = square._position.x() + square._width;
-        float rectMaxY = square._position.y() + square._height;
+        utils::Vec4 rectAABB = rect.GetAABB();
+
+        float rectMinX = rectAABB[0];
+        float rectMinY = rectAABB[1];
+        float rectMaxX = rectAABB[2];
+        float rectMaxY = rectAABB[3];
 
         // center is inside the square
         if(CheckPointRect(px, py, rectMinX, rectMinY, rectMaxX, rectMaxY))
@@ -145,5 +147,13 @@ namespace engine
         float projY = fromY + t * (toY - fromY);
         // return the squared length between the closest point in the line and the target point
         return (projX - px) * (projX - px) + (projY - px) * (projY - px);
+    }
+
+    const utils::Vec4 &Collider::GetAABB() const
+    {
+        return utils::Vec4(_position.x() - _width * 0.5f,
+                           _position.y() - _height * 0.5f,
+                           _position.x() + _width * 0.5f,
+                           _position.y() + _height * 0.5f);
     }
 }
