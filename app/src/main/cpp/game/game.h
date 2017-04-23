@@ -7,8 +7,8 @@
 
 #include <list>
 
-#include "platform/application.h"
-#include "engine/sprite.h"
+#include "engine/platform/application.h"
+#include "engine/graphics/scene.h"
 
 namespace game
 {
@@ -18,16 +18,18 @@ namespace game
         Game();
 
         void Initialize(int width, int height);
-        void ProcessInput(const std::list<platform::Application::InputType>& events);
+        void ProcessInput(const std::list<engine::platform::Application::InputType>& events);
         void Update(float deltaSeconds);
-        void Draw(platform::Renderer& renderer);
+
+        engine::graphics::Scene* GetCurrentScene();
 
         protected:
         float _width;
         float _height;
         float _playerVelocity;
-        engine::Sprite _sprite;
-        engine::Sprite _background;
+        engine::graphics::SpriteNodePtr _sprite;
+        engine::graphics::SpriteNodePtr _background;
+        engine::graphics::ScenePtr _currentScene;
     };
 }
 

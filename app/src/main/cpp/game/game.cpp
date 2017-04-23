@@ -6,37 +6,42 @@
 #include <string>
 
 #include "game/game.h"
-#include "utils/logger.h"
+#include "engine/utils/logger.h"
 
-#include "engine/collider.h"
+#include "engine/physics/collider.h"
 
 const std::string LOG_TAG("Game");
 
 constexpr float G = -9.8f * 200.0f;
 constexpr  float kImpulse = 700.0f;
 
-engine::Collider circle, rect;
+engine::physics::Collider circle, rect;
 
 namespace game
 {
     Game::Game()
-    :_background("squared.png")
-    ,_sprite("rounded.png")
     {
     }
 
     void Game::Initialize(int width, int height)
     {
+        _currentScene = engine::graphics::Scene::Create();
         _width = static_cast<float>(width);
         _height = static_cast<float>(height);
-        _sprite.SetSize(100.0f, 100.0f);
-        _sprite.SetPosition(_width/2, _height/2);
-        _sprite.SetDepth(1.0f);
+        _sprite = engine::graphics::SpriteNode::Create("rounded.png");
+        _sprite->SetSize(engine::utils::Vec2(100.0f, 100.0f));
+        _sprite->SetPosition(engine::utils::Vec2(_width/2, _height/2));
+        _sprite->SetZOrder(1);
 
-        _background.SetSize(width, height);
-        _background.SetPosition(_width/2, _height/2);
-        _background.SetDepth(2.0f);
+        _currentScene->AddChild(_sprite.get());
+
+        _background = engine::graphics::SpriteNode::Create("squared.png");
+        _background->SetSize(engine::utils::Vec2(width, height));
+        _background->SetPosition(engine::utils::Vec2(_width/2, _height/2));
+        _background->SetZOrder(2);
         _playerVelocity = kImpulse;
+
+        _currentScene->AddChild(_background.get());
 
         circle.SetRadius(1000.0f);
         rect.SetSize(200.0f, 200.0f);
@@ -46,9 +51,9 @@ namespace game
 
     void Game::Update(float deltaSeconds)
     {
-        float newY = _sprite.GetPosition().y() + _playerVelocity * deltaSeconds + 0.5f * G * deltaSeconds * deltaSeconds;
+        float newY = _sprite->GetPosition().y() + _playerVelocity * deltaSeconds + 0.5f * G * deltaSeconds * deltaSeconds;
         _playerVelocity += deltaSeconds * G;
-        _sprite.SetPosition(_sprite.GetPosition().x(), newY);
+        _sprite->SetPosition(engine::utils::Vec2(_sprite->GetPosition().x(), newY));
 
         if(deltaSeconds > 0.1f)
         {
@@ -56,24 +61,23 @@ namespace game
         }
     }
 
-    void Game::Draw(platform::Renderer &renderer)
-    {
-        renderer.DrawSprite(_background);
-        renderer.DrawSprite(_sprite);
-    }
-
-    void Game::ProcessInput(const std::list<platform::Application::InputType>& events)
+    void Game::ProcessInput(const std::list<engine::platform::Application::InputType>& events)
     {
         for(auto itr = events.begin(); itr != events.end(); ++itr)
         {
             switch((*itr))
             {
-                case platform::Application::InputType::BEGIN:
+                case engine::platform::Application::InputType::BEGIN:
                     _playerVelocity = kImpulse;
                 break;
-                case platform::Application::InputType::END:
+                case engine::platform::Application::InputType::END:
                 break;
             }
         }
+    }
+
+    engine::graphics::Scene* Game::GetCurrentScene()
+    {
+        _currentScene.get();
     }
 }
