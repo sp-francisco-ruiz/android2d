@@ -1,5 +1,5 @@
 //
-// Created by fjruiz on 14/04/2017.
+// Created by fjruiz.
 //
 #ifndef RENDERER_H
 #define RENDERER_H

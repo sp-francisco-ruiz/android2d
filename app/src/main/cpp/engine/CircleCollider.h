@@ -1,14 +1,22 @@
 //
-// Created by Francisco Ruiz on 19/4/17.
+// Created by Francisco Ruiz.
 //
 
-#ifndef ANDROID2D_CIRCLECOLLIDER_H
-#define ANDROID2D_CIRCLECOLLIDER_H
+#ifndef CIRCLECOLLIDER_H
+#define CIRCLECOLLIDER_H
 
+#include "engine/collider.h"
+namespace engine
+{
+    class CircleCollider : public Collider
+    {
+    public:
+        CircleCollider();
 
-class CircleCollider {
-
-};
-
-
-#endif //ANDROID2D_CIRCLECOLLIDER_H
+        float GetRadius() const;
+        void SetRadius(float radius);
+    private:
+        float _radius;
+    };
+}
+#endif //CIRCLECOLLIDER_H

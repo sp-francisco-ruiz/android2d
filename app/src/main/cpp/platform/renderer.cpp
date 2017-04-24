@@ -1,7 +1,6 @@
 //
-// Created by fjruiz on 14/04/2017.
+// Created by fjruiz.
 //
-//#include <stdint.h>
 #include <android/native_window.h>
 
 #include <EGL/egl.h>
@@ -181,8 +180,8 @@ namespace renderutils
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 
         return texid;
     }
@@ -316,7 +315,7 @@ namespace platform
         _surface = surface;
         _context = context;
 
-        glClearColor(0, 1, 0, 0);
+        glClearColor(0, 0, 0, 0);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -374,6 +373,8 @@ namespace platform
         if(!texture.Valid())
         {
             texture.Init(*this);
+            if(!texture.Valid())
+                return;
         }
         glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(texture.GetId()));
         glUniformMatrix4fv(modelUniform, 1, GL_FALSE, (GLfloat*)&sprite.GetTransform());

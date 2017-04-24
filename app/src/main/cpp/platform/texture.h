@@ -1,5 +1,5 @@
 //
-// Created by fjruiz on 16/04/2017.
+// Created by fjruiz.
 //
 
 #ifndef TEXTURE_H
@@ -16,7 +16,8 @@ namespace platform
     {
     public:
 
-        Texture(const std::string& fileName);
+        Texture();
+        void SetTextureName(const std::string& fileName);
         ~Texture();
 
         bool Valid() const;

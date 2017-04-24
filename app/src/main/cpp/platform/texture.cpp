@@ -1,5 +1,5 @@
 //
-// Created by fjruiz on 15/04/2017.
+// Created by fjruiz.
 //
 
 #include "platform/texture.h"
@@ -7,14 +7,18 @@
 
 namespace platform
 {
-    Texture::Texture(const std::string& fileName)
+    Texture::Texture()
     : _valid(false)
-    , _fileName(fileName)
     {
     }
 
     Texture::~Texture()
     {
+    }
+
+    void Texture::SetTextureName(const std::string& fileName)
+    {
+        _fileName = fileName;
     }
 
     bool Texture::Valid() const

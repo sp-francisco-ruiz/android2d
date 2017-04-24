@@ -1,16 +1,14 @@
 //
-// Created by fjruiz on 14/04/2017.
+// Created by fjruiz.
 //
-
 #include "engine/sprite.h"
 namespace engine
 {
-    Sprite::Sprite(const std::string& fileName)
+    Sprite::Sprite()
     :_width(0.0f)
     ,_height(0.0f)
     ,_position(0.0f,0.0f,0.0f,1.0f)
     ,_color(1.0f,1.0f,1.0f,1.0f)
-    ,_texture(fileName)
     {
         _transform.LoadIdentity();
     }
@@ -62,5 +60,10 @@ namespace engine
     platform::Texture &Sprite::GetTexture()
     {
         return _texture;
+    }
+
+    void Sprite::SetTexture(const std::string& fileName)
+    {
+        _texture.SetTextureName(fileName);
     }
 }

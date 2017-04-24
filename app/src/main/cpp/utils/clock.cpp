@@ -1,5 +1,5 @@
 //
-// Created by fjruiz on 15/04/2017.
+// Created by fjruiz.
 //
 
 #include "clock.h"

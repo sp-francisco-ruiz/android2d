@@ -1,7 +1,6 @@
 //
-// Created by fjruiz on 14/04/2017.
+// Created by fjruiz.
 //
-
 #include <jni.h>
 
 #include <android/native_window.h>

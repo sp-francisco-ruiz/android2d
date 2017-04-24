@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.content.res.AssetManager;
 import android.os.Bundle;
+import android.support.v4.view.MotionEventCompat;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceView;
@@ -27,19 +28,20 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
         setContentView(R.layout.activity_main);
         SurfaceView surfaceView = (SurfaceView)findViewById(R.id.surfaceview);
         surfaceView.getHolder().addCallback(this);
-        surfaceView.setOnTouchListener(new View.OnTouchListener()
-        {
-            @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                if(event.getAction() == MotionEvent.ACTION_DOWN)
-                {
-                    OnPress();
-                    return true;
-                }
-                return false;
-            }
-        });
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+
+        int action = MotionEventCompat.getActionMasked(event);
+
+        switch(action) {
+            case (MotionEvent.ACTION_DOWN) :
+                OnPress();
+                return true;
+            default :
+                return super.onTouchEvent(event);
+        }
     }
 
     @Override

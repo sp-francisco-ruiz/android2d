@@ -1,7 +1,6 @@
 //
-// Created by fjruiz on 14/04/2017.
+// Created by fjruiz.
 //
-
 #ifndef SPRITE_H
 #define SPRITE_H
 
@@ -13,7 +12,8 @@ namespace engine
     class Sprite
     {
     public:
-        Sprite(const std::string& fileName);
+        Sprite();
+        void SetTexture(const std::string& fileName);
 
         const utils::Vec4& GetPosition() const;
         void SetPosition(float x, float y);

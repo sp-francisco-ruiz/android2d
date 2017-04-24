@@ -1,7 +1,6 @@
 //
-// Created by fjruiz on 15/04/2017.
+// Created by fjruiz.
 //
-
 #ifndef APPLICATION_H
 #define APPLICATION_H
 
