@@ -5,7 +5,6 @@
 #ifndef CLOCK_H
 #define CLOCK_H
 
-#include <chrono>
 namespace utils
 {
     class Clock
@@ -19,16 +18,16 @@ namespace utils
 
         float Seconds();
 
-        unsigned int Millis();
+        long Millis();
 
-        unsigned int Micros();
+        long Micros();
 
     private:
         Clock(const Clock &) = delete;
 
         Clock &operator=(const Clock &) = delete;
 
-        std::chrono::time_point<std::chrono::system_clock> _start;
+        long _start;
     };
 }
 #endif // CLOCK_H

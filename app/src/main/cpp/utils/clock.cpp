@@ -4,6 +4,7 @@
 
 #include "clock.h"
 
+#include <chrono>
 namespace utils
 {
     Clock::Clock()
@@ -17,23 +18,24 @@ namespace utils
 
     void Clock::Reset()
     {
-        _start = std::chrono::system_clock::now();
+        auto duration = std::chrono::system_clock::now().time_since_epoch();
+        _start = std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
     }
 
-    unsigned int Clock::Millis()
+    long Clock::Millis()
     {
-        return static_cast<unsigned int>(Seconds() * 1000.0f);
+        auto end = std::chrono::system_clock::now().time_since_epoch();
+        long endTS = std::chrono::duration_cast<std::chrono::milliseconds>(end).count();
+        return endTS - _start;
     }
 
-    unsigned int Clock::Micros()
+    long Clock::Micros()
     {
-        return static_cast<unsigned int>(Seconds() * 1000000.0f);
+        return Millis() * 1000;
     }
 
     float Clock::Seconds()
     {
-        auto end = std::chrono::system_clock::now();
-        std::chrono::duration<float> elapsed_seconds = end - _start;
-        return elapsed_seconds.count();
+        return Millis() * 0.001f;
     }
 }
