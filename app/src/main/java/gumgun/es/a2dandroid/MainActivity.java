@@ -13,9 +13,6 @@ import android.view.SurfaceHolder;
 
 public class MainActivity extends Activity implements SurfaceHolder.Callback
 {
-
-    private static String TAG = "MainActivity";
-
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -84,7 +81,6 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
     {
         SetSurface(null);
     }
-
 
     public static native void OnStart();
     public static native void OnResume();
