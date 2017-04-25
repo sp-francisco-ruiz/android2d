@@ -21,11 +21,8 @@ namespace engine
         static bool Overlaps(const utils::Vec4& aabb1, const utils::Vec4& aabb2);
 
         static bool CheckCircleRect(const CircleCollider &circle, RectCollider &square);
-
         static bool CheckPointRect(float px, float py, RectCollider& r);
-
         static float ClosestDistanceInSegmentToPointSq(float fromX, float fromY, float toX, float toY, float px, float py);
-
     };
 }
 

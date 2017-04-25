@@ -2,14 +2,10 @@
 // Created by fjruiz.
 //
 
-#include <cmath>
 #include <limits>
-#include <string>
+#include <algorithm>
 
-#include "utils/logger.h"
 #include "engine/physics.h"
-
-const std::string LOG_TAG("Physics");
 
 namespace engine
 {

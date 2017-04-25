@@ -13,16 +13,11 @@ namespace platform
     class Application
     {
     public:
+
         enum class InputType
         {
             BEGIN = 0,
             END
-        };
-        enum class ThreadMessage
-        {
-            NONE = 0,
-            INITIALIZE,
-            EXIT
         };
 
         Application();
@@ -39,6 +34,13 @@ namespace platform
         void SetAssets(AAssetManager* assets);
 
     private:
+
+        enum class ThreadMessage
+        {
+            NONE = 0,
+            INITIALIZE,
+            EXIT
+        };
 
         void MainLoop();
 

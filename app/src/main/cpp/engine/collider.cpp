@@ -2,9 +2,6 @@
 // Created by fjruiz.
 //
 
-#include <cmath>
-#include <limits>
-
 #include "engine/collider.h"
 
 namespace engine

@@ -151,7 +151,7 @@ namespace renderutils
         auto asset = AAssetManager_open(assets, filename, AASSET_MODE_UNKNOWN);
         if(!asset)
         {
-            LOG_ERROR("file not found");
+            LOG_ERROR("file not found: %s", filename);
             return texid;
         }
         size_t size = static_cast<size_t>(AAsset_getLength(asset));
@@ -165,7 +165,7 @@ namespace renderutils
         auto error = lodepng::decode(decoded, width, height, encoded, size);
         if(error)
         {
-            LOG_ERROR("Fail decoding img");
+            LOG_ERROR("Fail decoding img: %s", filename);
             return texid;
         }
         free(encoded);
@@ -232,8 +232,7 @@ namespace platform
     }
 
     bool Renderer::Initialize()
-    {    LOG_INFO("Initializing context");
-
+    {
         EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
         if (display == EGL_NO_DISPLAY)
         {
@@ -316,6 +315,7 @@ namespace platform
         _context = context;
 
         glClearColor(0, 0, 0, 0);
+        glDisable(GL_DEPTH_TEST);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -337,8 +337,6 @@ namespace platform
 
     void Renderer::Destroy()
     {
-        LOG_INFO("Destroying context");
-
         eglMakeCurrent(_display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
         eglDestroyContext(_display, _context);
         eglDestroySurface(_display, _surface);

@@ -7,13 +7,9 @@
 #include <android/native_window_jni.h>
 #include <android/asset_manager.h>
 #include <android/asset_manager_jni.h>
-#include <string>
 
 #include "native-lib.h"
-#include "utils/logger.h"
 #include "platform/application.h"
-
-const std::string LOG_TAG("JNI");
 
 static platform::Application *mainApp = nullptr;
 
@@ -42,7 +38,6 @@ JNIEXPORT void JNICALL Java_gumgun_es_a2dandroid_MainActivity_OnPress(JNIEnv* je
 {
     mainApp->OnPressed();
 }
-JNIEXPORT void JNICALL Java_gumgun_es_a2dandroid_MainActivity_SetSurface(JNIEnv* jenv, jobject obj, jobject surface);
 
 JNIEXPORT void JNICALL Java_gumgun_es_a2dandroid_MainActivity_SetSurface(JNIEnv* jenv, jobject obj, jobject surface)
 {

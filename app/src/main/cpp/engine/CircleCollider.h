@@ -6,6 +6,7 @@
 #define CIRCLECOLLIDER_H
 
 #include "engine/collider.h"
+
 namespace engine
 {
     class CircleCollider : public Collider

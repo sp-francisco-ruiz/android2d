@@ -1,7 +1,9 @@
 //
 // Created by fjruiz.
 //
+
 #include "engine/sprite.h"
+
 namespace engine
 {
     Sprite::Sprite()
@@ -57,7 +59,7 @@ namespace engine
         return _transform;
     }
 
-    platform::Texture &Sprite::GetTexture()
+    Texture& Sprite::GetTexture()
     {
         return _texture;
     }

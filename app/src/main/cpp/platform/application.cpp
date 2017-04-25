@@ -3,11 +3,10 @@
 //
 #include <string>
 #include <thread>
+
 #include "game/game.h"
 #include "utils/clock.h"
-#include "utils/logger.h"
 
-const std::string LOG_TAG("Application");
 namespace platform
 {
     Application::Application()

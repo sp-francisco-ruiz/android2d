@@ -15,13 +15,13 @@ namespace utils
     public:
 
         Vec4();
-        Vec4(const Vec4&);
+        Vec4(const Vec4& o);
         Vec4(const Vec3& o, float u4);
         Vec4(float u1, float u2, float u3, float u4);
-        Vec4& operator=(const Vec4&);
+        Vec4& operator=(const Vec4& o);
 
-        const float operator[](unsigned short int) const;
-        float& operator[](unsigned short int);
+        const float operator[](unsigned short int i) const;
+        float& operator[](unsigned short int i);
         float x() const;
         float y() const;
         float z() const;
@@ -29,29 +29,29 @@ namespace utils
         const Vec3 xyz() const;
 
         const Vec4 operator-() const;
-        Vec4& operator+=(const Vec4&);
-        Vec4& operator-=(const Vec4&);
-        Vec4& operator*=(float);
-        Vec4& operator/=(float);
-        const Vec4 operator+(const Vec4&) const;
-        const Vec4 operator-(const Vec4&) const;
-        const Vec4 operator*(float) const;
-        const Vec4 operator/(float) const;
+        Vec4& operator+=(const Vec4& o);
+        Vec4& operator-=(const Vec4& o);
+        Vec4& operator*=(float o);
+        Vec4& operator/=(float o);
+        const Vec4 operator+(const Vec4& o) const;
+        const Vec4 operator-(const Vec4& o) const;
+        const Vec4 operator*(float o) const;
+        const Vec4 operator/(float o) const;
 
-        float operator*(const Vec4&) const;
+        float operator*(const Vec4& o) const;
         float Length() const;
         float LengthSq() const;
         const Vec4 Normalized() const;
 
-        Vec4& AddEq(const Vec4&);
-        Vec4& SubEq(const Vec4&);
-        Vec4& MultEq(const float);
-        Vec4& DivEq(const float);
-        const Vec4 Add(const Vec4&) const;
-        const Vec4 Sub(const Vec4&) const;
-        const Vec4 Mult(const float) const;
-        const Vec4 Div(const float) const;
-        float Dot(const Vec4&) const;
+        Vec4& AddEq(const Vec4& o);
+        Vec4& SubEq(const Vec4& o);
+        Vec4& MultEq(const float o);
+        Vec4& DivEq(const float o);
+        const Vec4 Add(const Vec4& o) const;
+        const Vec4 Sub(const Vec4& o) const;
+        const Vec4 Mult(const float o) const;
+        const Vec4 Div(const float o) const;
+        float Dot(const Vec4& o) const;
 
     private:
         float _content[4];

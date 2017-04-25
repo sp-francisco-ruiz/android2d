@@ -6,12 +6,9 @@
 
 namespace engine
 {
-
-
     CircleCollider::CircleCollider()
     :_radius(0.0f)
     {
-
     }
 
     float CircleCollider::GetRadius() const

@@ -5,6 +5,7 @@
 #define COLLIDER_H
 
 #include "utils/vec4.h"
+
 namespace engine
 {
     class Collider

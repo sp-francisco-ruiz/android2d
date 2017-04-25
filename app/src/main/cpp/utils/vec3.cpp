@@ -155,9 +155,9 @@ namespace utils
     {
         Vec3 res;
 
-        res._content[0] = (a._content[1]*b._content[2]) - (b._content[1]*a._content[2]);
+        res._content[0] =  (a._content[1]*b._content[2]) - (b._content[1]*a._content[2]);
         res._content[1] = -(a._content[0]*b._content[2]) + (b._content[0]*a._content[2]);
-        res._content[2] = (a._content[0]*b._content[1]) - (a._content[1]*b._content[0]);
+        res._content[2] =  (a._content[0]*b._content[1]) - (a._content[1]*b._content[0]);
 
         return res;
     }

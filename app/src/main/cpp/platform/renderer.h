@@ -8,7 +8,8 @@
 #include <EGL/egl.h>
 #include <GLES/gl.h>
 #include <android/asset_manager.h>
-#include <utils/mat4.h>
+
+#include "utils/mat4.h"
 
 namespace engine
 {
@@ -17,19 +18,20 @@ namespace engine
 
 namespace platform
 {
-    class Renderer {
+    class Renderer
+    {
 
     public:
         Renderer();
         virtual ~Renderer();
 
-        void SetAssetManager(AAssetManager *assetManager);
-        void SetWindow(ANativeWindow *window);
+        void SetAssetManager(AAssetManager* assetManager);
+        void SetWindow(ANativeWindow* window);
 
         bool Initialize();
         void Destroy();
         void StartFrame();
-        void DrawSprite(engine::Sprite &sprite);
+        void DrawSprite(engine::Sprite& sprite);
         void EndFrame();
 
         int GetWidth() const;

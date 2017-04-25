@@ -9,8 +9,6 @@ import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.SurfaceView;
 import android.view.SurfaceHolder;
-import android.view.View;
-import android.util.Log;
 
 
 public class MainActivity extends Activity implements SurfaceHolder.Callback
@@ -23,7 +21,6 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
     {
         super.onCreate(savedInstanceState);
 
-        Log.i(TAG, "onCreate()");
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_main);
         SurfaceView surfaceView = (SurfaceView)findViewById(R.id.surfaceview);
@@ -48,7 +45,6 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
     protected void onStart()
     {
         super.onStart();
-        Log.i(TAG, "onStart()");
         OnStart();
         SetAssetManager(getAssets());
     }
@@ -57,7 +53,6 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
     protected void onResume()
     {
         super.onResume();
-        Log.i(TAG, "onResume()");
         OnResume();
     }
 
@@ -65,7 +60,6 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
     protected void onPause()
     {
         super.onPause();
-        Log.i(TAG, "onPause()");
         OnPause();
     }
 
@@ -73,7 +67,6 @@ public class MainActivity extends Activity implements SurfaceHolder.Callback
     protected void onStop()
     {
         super.onStop();
-        Log.i(TAG, "onStop()");
         OnStop();
     }
 

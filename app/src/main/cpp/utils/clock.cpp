@@ -3,6 +3,7 @@
 //
 
 #include "clock.h"
+
 namespace utils
 {
     Clock::Clock()

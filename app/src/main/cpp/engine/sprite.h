@@ -5,7 +5,7 @@
 #define SPRITE_H
 
 #include "utils/mat4.h"
-#include "platform/texture.h"
+#include "engine/texture.h"
 
 namespace engine
 {
@@ -26,7 +26,7 @@ namespace engine
         float GetHeight() const;
         const utils::Mat4& GetTransform() const;
 
-        platform::Texture& GetTexture();
+        Texture& GetTexture();
 
     protected:
         float _width;
@@ -34,7 +34,7 @@ namespace engine
         utils::Vec4 _position;
         utils::Vec4 _color;
         utils::Mat4 _transform;
-        platform::Texture _texture;
+        Texture _texture;
     };
 }
 

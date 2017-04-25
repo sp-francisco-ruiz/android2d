@@ -6,13 +6,9 @@
 #include <sstream>
 
 #include "game/game.h"
-#include "utils/logger.h"
-
-const std::string LOG_TAG("Game");
 
 constexpr float G = -9.8f * 200.0f;
 constexpr  float kImpulse = 700.0f;
-
 
 namespace game
 {
@@ -66,7 +62,7 @@ namespace game
         float halfHeight = _height * 0.5f;
 
         _pipesSpace = _width;
-        _gameVelocity = 180.0f;
+        _gameVelocity = 250.0f;
 
         _playerX = _width * 0.33f;
         _player.SetPosition(_playerX, halfHeight);
@@ -103,10 +99,10 @@ namespace game
         {
             StartGame();
         }
-        _gameVelocity += _gameVelocity * 0.001f * deltaSeconds;
+        _gameVelocity += _gameVelocity * 0.01f * deltaSeconds;
     }
 
-    void Game::Draw(platform::Renderer &renderer)
+    void Game::Draw(platform::Renderer& renderer)
     {
         renderer.DrawSprite(_background);
         for(size_t i = 0; i < kMaxPipes; ++i)

@@ -2,10 +2,10 @@
 // Created by fjruiz.
 //
 
-#include "platform/texture.h"
+#include "engine/texture.h"
 #include "platform/renderer.h"
 
-namespace platform
+namespace engine
 {
     Texture::Texture()
     : _valid(false)
@@ -31,7 +31,7 @@ namespace platform
         return _id;
     }
 
-    void Texture::Init(Renderer &renderer)
+    void Texture::Init(platform::Renderer& renderer)
     {
         _id = static_cast<unsigned int>(renderer.GetTextureId(_fileName));
         _valid = _id != 0xdead;

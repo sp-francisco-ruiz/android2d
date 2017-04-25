@@ -5,12 +5,14 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include <mutex>
-#include <list>
+#include <string>
 
 namespace platform
 {
     class Renderer;
+}
+namespace engine
+{
 
     class Texture
     {
@@ -23,7 +25,7 @@ namespace platform
         bool Valid() const;
         unsigned int GetId() const;
 
-        void Init(Renderer& renderer);
+        void Init(platform::Renderer& renderer);
 
     private:
         std::string _fileName;
