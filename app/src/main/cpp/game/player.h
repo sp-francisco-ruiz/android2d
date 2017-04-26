@@ -13,6 +13,7 @@ namespace game
     {
         public:
         Player();
+        void SetImage(const std::string& image);
         void SetPosition(float x, float y);
         void SetSize(float width, float height);
         float GetWidth() const;

@@ -9,7 +9,6 @@
 
 namespace engine
 {
-    class IRenderer;
     class Texture
     {
     public:
@@ -21,9 +20,10 @@ namespace engine
         bool Valid() const;
         unsigned int GetId() const;
 
-        void Init(IRenderer& renderer);
 
     private:
+        void Init();
+
         std::string _fileName;
         bool _valid;
         unsigned int _id;

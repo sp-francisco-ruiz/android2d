@@ -332,9 +332,6 @@ namespace platform
 
     void OGLESRenderer::StartFrame()
     {
-        if (!_display)
-            return;
-
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glUseProgram(program);
@@ -353,35 +350,12 @@ namespace platform
         auto& texture = sprite.GetTexture();
         if(!texture.Valid())
         {
-            texture.Init(*this);
-            if(!texture.Valid())
-                return;
-        }
-        auto error = glGetError();
-        if(error != GL_NO_ERROR)
-        {
-            LOG_ERROR("peta");
+            return;
         }
         glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(texture.GetId()));
-
-        error = glGetError();
-        if(error != GL_NO_ERROR)
-        {
-            LOG_ERROR("peta 1");
-        }
         glUniformMatrix4fv(modelUniform, 1, GL_FALSE, (GLfloat*)&sprite.GetTransform());
-        error = glGetError();
-        if(error != GL_NO_ERROR)
-        {
-            LOG_ERROR("peta 1");
-        }
 
         glDrawArrays(GL_TRIANGLES, 0, 6);
-        error = glGetError();
-        if(error != GL_NO_ERROR)
-        {
-            LOG_ERROR("peta 3");
-        }
     }
 
     void OGLESRenderer::EndFrame()

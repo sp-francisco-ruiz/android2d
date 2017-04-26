@@ -9,7 +9,11 @@ namespace game
 
     Player::Player()
     {
-        _sprite.SetTexture("bird.png");
+    }
+
+    void Player::SetImage(const std::string& image)
+    {
+        _sprite.SetTexture(image);
         _sprite.SetDepth(3.0f);
     }
 

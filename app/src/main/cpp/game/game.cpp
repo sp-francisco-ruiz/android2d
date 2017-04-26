@@ -33,6 +33,7 @@ namespace game
         for(int i = 0; i < kMaxPipes; ++i)
         {
             _obstacles[i].SetSize(kObstacleWidth, kObstacleHeight);
+            _obstacles[i].SetImages("pipetop.png", "pipebottom.png");
         }
         _startButton.SetTexture("start.png");
         _startButton.SetSize(300.0f, 200.0f);
@@ -44,6 +45,7 @@ namespace game
         _background.SetPosition(width * 0.5f, height * 0.5f);
         _background.SetDepth(1.0f);
 
+        _player.SetImage("bird.png");
         _player.SetSize(100.0f, 100.0f);
 
         for(int i = 0; i < 10; ++i)

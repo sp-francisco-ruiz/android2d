@@ -14,6 +14,8 @@ namespace game
     {
     public:
         Obstacle();
+
+        void SetImages(const std::string& topImage, const std::string& bottomImage);
         void SetSize(float width, float height);
         float GetWidth() const;
 

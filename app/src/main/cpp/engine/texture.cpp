@@ -4,6 +4,8 @@
 
 #include "engine/texture.h"
 #include "engine/irenderer.h"
+#include "engine/iwindow.h"
+#include "engine/application.h"
 
 namespace engine
 {
@@ -19,6 +21,7 @@ namespace engine
     void Texture::SetTextureName(const std::string& fileName)
     {
         _fileName = fileName;
+        Init();
     }
 
     bool Texture::Valid() const
@@ -31,9 +34,9 @@ namespace engine
         return _id;
     }
 
-    void Texture::Init(engine::IRenderer& renderer)
+    void Texture::Init()
     {
-        _id = renderer.GetTextureId(_fileName);
+        _id = Application::GetInstance().GetWindow().GetRenderer().GetTextureId(_fileName);
         _valid = _id != 0xdead;
     }
 

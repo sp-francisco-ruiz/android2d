@@ -11,8 +11,12 @@ namespace game
 
     Obstacle::Obstacle()
     {
-        _topSprite.SetTexture("pipetop.png");
-        _botSprite.SetTexture("pipebottom.png");
+    }
+
+    void Obstacle::SetImages(const std::string& topImage, const std::string& bottomImage)
+    {
+        _topSprite.SetTexture(topImage);
+        _botSprite.SetTexture(bottomImage);
         _botSprite.SetDepth(2.0f);
         _topSprite.SetDepth(2.0f);
     }
