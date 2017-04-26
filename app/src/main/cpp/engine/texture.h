@@ -7,13 +7,9 @@
 
 #include <string>
 
-namespace platform
-{
-    class Renderer;
-}
 namespace engine
 {
-
+    class IRenderer;
     class Texture
     {
     public:
@@ -25,7 +21,7 @@ namespace engine
         bool Valid() const;
         unsigned int GetId() const;
 
-        void Init(platform::Renderer& renderer);
+        void Init(IRenderer& renderer);
 
     private:
         std::string _fileName;

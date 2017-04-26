@@ -3,7 +3,7 @@
 //
 
 #include "engine/texture.h"
-#include "platform/renderer.h"
+#include "engine/irenderer.h"
 
 namespace engine
 {
@@ -31,9 +31,9 @@ namespace engine
         return _id;
     }
 
-    void Texture::Init(platform::Renderer& renderer)
+    void Texture::Init(engine::IRenderer& renderer)
     {
-        _id = static_cast<unsigned int>(renderer.GetTextureId(_fileName));
+        _id = renderer.GetTextureId(_fileName);
         _valid = _id != 0xdead;
     }
 

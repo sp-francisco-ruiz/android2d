@@ -12,8 +12,11 @@
 
 #include "utils/logger.h"
 #include "utils/lodepng.h"
-#include "platform/renderer.h"
 #include "engine/sprite.h"
+#include "engine/application.h"
+#include "platform/oglesrenderer.h"
+#include "platform/androidwindow.h"
+#include "engine/ifilesmanager.h"
 
 const std::string LOG_TAG("Renderer");
 
@@ -145,20 +148,18 @@ namespace renderutils
         return 0;
     }
 
-    GLuint CreateTexture(AAssetManager* assets, const char* filename)
+    GLuint CreateTexture(const char* filename)
     {
         GLuint texid = 0xdead;
-        auto asset = AAssetManager_open(assets, filename, AASSET_MODE_UNKNOWN);
-        if(!asset)
+
+        unsigned int size = 0;
+        unsigned char* encoded = engine::Application::GetInstance().GetFilesManager().GetFileContents(filename, size);
+
+        if(size == 0)
         {
             LOG_ERROR("file not found: %s", filename);
             return texid;
         }
-        size_t size = static_cast<size_t>(AAsset_getLength(asset));
-        unsigned char* encoded = static_cast<unsigned char*>(malloc (sizeof(char)*size));
-        AAsset_read (asset, encoded, static_cast<size_t>(size));
-        AAsset_close(asset);
-
 
         std::vector<unsigned char> decoded;
         unsigned int width, height;
@@ -189,60 +190,38 @@ namespace renderutils
 
 namespace platform
 {
-    Renderer::Renderer()
-    : _window(nullptr)
-    , _display(nullptr)
+    OGLESRenderer::OGLESRenderer()
+    : _display(nullptr)
     , _surface(nullptr)
     , _context(nullptr)
-    , _width(0)
-    , _height(0)
     {
     }
 
-    Renderer::~Renderer()
+    OGLESRenderer::~OGLESRenderer()
     {
     }
 
-    int Renderer::GetWidth() const
-    {
-        return _width;
-    }
-
-    int Renderer::GetHeight() const
-    {
-        return _height;
-    }
-
-    GLuint Renderer::GetTextureId(const std::string& fileName)
+    unsigned int OGLESRenderer::GetTextureId(const std::string& fileName)
     {
         if(_textures.find(fileName) == _textures.end())
         {
-            _textures[fileName] = renderutils::CreateTexture(_assetManager, fileName.c_str());
+            _textures[fileName] = renderutils::CreateTexture(fileName.c_str());
         }
-        return _textures[fileName];
+        return static_cast<unsigned int>(_textures[fileName]);
     }
 
-    void Renderer::SetWindow(ANativeWindow* window)
-    {
-        if(!window)
-        {
-            ANativeWindow_release(_window);
-        }
-        _window = window;
-    }
-
-    bool Renderer::Initialize()
+    void OGLESRenderer::Initialize(engine::IWindow* window)
     {
         EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
         if (display == EGL_NO_DISPLAY)
         {
             LOG_ERROR("eglGetDisplay() returned error %d", eglGetError());
-            return false;
+            return;
         }
         if (!eglInitialize(display, 0, 0))
         {
             LOG_ERROR("eglInitialize() returned error %d", eglGetError());
-            return false;
+            return;
         }
 
         const EGLint attribs[] =
@@ -260,27 +239,32 @@ namespace platform
         if (!eglChooseConfig(display, attribs, &config, 1, &numConfigs))
         {
             LOG_ERROR("eglChooseConfig() returned error %d", eglGetError());
-            Destroy();
-            return false;
+            Dispose();
+            return;
         }
 
         EGLint format;
         if (!eglGetConfigAttrib(display, config, EGL_NATIVE_VISUAL_ID, &format))
         {
             LOG_ERROR("eglGetConfigAttrib() returned error %d", eglGetError());
-            Destroy();
-            return false;
+            Dispose();
+            return;
         }
 
-        ANativeWindow_setBuffersGeometry(_window, 0, 0, format);
+#ifdef ANDROID_NATIVE_WINDOW_H
+        AndroidWindow* androidWindow = static_cast<AndroidWindow*>(window);
+        ANativeWindow_setBuffersGeometry(androidWindow->GetNativeWindow(), 0, 0, format);
 
-        EGLSurface surface = eglCreateWindowSurface(display, config, _window, NULL);
+        EGLSurface surface = eglCreateWindowSurface(display, config, androidWindow->GetNativeWindow(), NULL);
         if (!surface)
         {
             LOG_ERROR("eglCreateWindowSurface() returned error %d", eglGetError());
-            Destroy();
-            return false;
+            Dispose();
+            return;
         }
+#else
+#error Platform not implemented
+#endif
 
         EGLint contextAttribs[] =
         {
@@ -291,23 +275,23 @@ namespace platform
         if (context == EGL_NO_CONTEXT)
         {
             LOG_ERROR("eglCreateContext() returned error %d", eglGetError());
-            Destroy();
-            return false;
+            Dispose();
+            return;
         }
 
         if (eglMakeCurrent(display, surface, surface, context) == EGL_FALSE)
         {
             LOG_ERROR("eglMakeCurrent() returned error %d", eglGetError());
-            Destroy();
-            return false;
+            Dispose();
+            return;
         }
 
         if (!eglQuerySurface(display, surface, EGL_WIDTH, &_width) ||
             !eglQuerySurface(display, surface, EGL_HEIGHT, &_height))
         {
             LOG_ERROR("eglQuerySurface() returned error %d", eglGetError());
-            Destroy();
-            return false;
+            Dispose();
+            return;
         }
 
         _display = display;
@@ -323,7 +307,7 @@ namespace platform
         if (!program)
         {
             LOG_ERROR("Could not create program");
-            return false;
+            return;
         }
         positionLocation = static_cast<GLuint>(glGetAttribLocation(program, "position"));
         uvLocation = static_cast<GLuint>(glGetAttribLocation(program, "uv"));
@@ -332,10 +316,9 @@ namespace platform
         textureUniform = glGetUniformLocation(program, "tex");
 
         _projMatrix.CalculateOrtho(0.0f, static_cast<float>(_width), 0.0f, static_cast<float>(_height), 0.0f, 100.0f);
-        return true;
     }
 
-    void Renderer::Destroy()
+    void OGLESRenderer::Dispose()
     {
         eglMakeCurrent(_display, EGL_NO_SURFACE, EGL_NO_SURFACE, EGL_NO_CONTEXT);
         eglDestroyContext(_display, _context);
@@ -347,7 +330,7 @@ namespace platform
         _context = EGL_NO_CONTEXT;
     }
 
-    void Renderer::StartFrame()
+    void OGLESRenderer::StartFrame()
     {
         if (!_display)
             return;
@@ -365,7 +348,7 @@ namespace platform
         glUniform1i(textureUniform, 0);
     }
 
-    void Renderer::DrawSprite(engine::Sprite& sprite)
+    void OGLESRenderer::DrawSprite(engine::Sprite& sprite)
     {
         auto& texture = sprite.GetTexture();
         if(!texture.Valid())
@@ -374,22 +357,38 @@ namespace platform
             if(!texture.Valid())
                 return;
         }
+        auto error = glGetError();
+        if(error != GL_NO_ERROR)
+        {
+            LOG_ERROR("peta");
+        }
         glBindTexture(GL_TEXTURE_2D, static_cast<GLuint>(texture.GetId()));
+
+        error = glGetError();
+        if(error != GL_NO_ERROR)
+        {
+            LOG_ERROR("peta 1");
+        }
         glUniformMatrix4fv(modelUniform, 1, GL_FALSE, (GLfloat*)&sprite.GetTransform());
+        error = glGetError();
+        if(error != GL_NO_ERROR)
+        {
+            LOG_ERROR("peta 1");
+        }
 
         glDrawArrays(GL_TRIANGLES, 0, 6);
+        error = glGetError();
+        if(error != GL_NO_ERROR)
+        {
+            LOG_ERROR("peta 3");
+        }
     }
 
-    void Renderer::EndFrame()
+    void OGLESRenderer::EndFrame()
     {
         if (!eglSwapBuffers(_display, _surface))
         {
             LOG_ERROR("eglSwapBuffers() returned error %d", eglGetError());
         }
-    }
-
-    void Renderer::SetAssetManager(AAssetManager* assetManager)
-    {
-        _assetManager = assetManager;
     }
 }

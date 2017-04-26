@@ -6,6 +6,7 @@
 #include <sstream>
 
 #include "game/game.h"
+#include "engine/irenderer.h"
 
 constexpr float G = -9.8f * 200.0f;
 constexpr  float kImpulse = 700.0f;
@@ -102,7 +103,7 @@ namespace game
         _gameVelocity += _gameVelocity * 0.01f * deltaSeconds;
     }
 
-    void Game::Draw(platform::Renderer& renderer)
+    void Game::Draw(engine::IRenderer& renderer)
     {
         renderer.DrawSprite(_background);
         for(size_t i = 0; i < kMaxPipes; ++i)
@@ -134,17 +135,17 @@ namespace game
         }
     }
 
-    void Game::ProcessInput(const std::list<platform::Application::InputType>& events)
+    void Game::ProcessInput(const std::list<engine::InputType>& events)
     {
         for(auto itr = events.begin(); itr != events.end(); ++itr)
         {
             switch((*itr))
             {
-                case platform::Application::InputType::BEGIN:
+                case engine::InputType::BEGIN:
                     _waitingStart = false;
                     _playerVelocity = kImpulse;
                 break;
-                case platform::Application::InputType::END:
+                case engine::InputType::END:
                 break;
             }
         }
@@ -179,5 +180,10 @@ namespace game
         {
             _pipesSpace = _pipesSpace * 0.9f;
         }
+    }
+
+    void Game::Dispose()
+    {
+
     }
 }

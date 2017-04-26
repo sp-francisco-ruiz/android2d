@@ -51,13 +51,13 @@ namespace utils
 
     const float Vec4::operator[](unsigned short int index) const
     {
-        assert("const float Vec4::operator[]" && index > -1 && index < 4);
+        assert("const float Vec4::operator[]" && index < 4);
         return _content[index];
     }
 
     float& Vec4::operator[](unsigned short int index)
     {
-        assert("float& Vec4::operator[]" && index > -1 && index < 4);
+        assert("float& Vec4::operator[]" && index < 4);
         return _content[index];
     }
 

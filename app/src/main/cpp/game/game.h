@@ -8,14 +8,17 @@
 
 #include "game/player.h"
 #include "game/obstacle.h"
-#include "platform/application.h"
+#include "engine/igame.h"
+#include "engine/application.h"
+#include "engine/statictypes.h"
 #include "utils/floatrandomset.h"
 
 namespace game
 {
-    class Game
+    class Game : public engine::IGame
     {
         public:
+
         static const size_t kMaxPipes;
         static const float kPipesGap;
         static const float kObstacleWidth;
@@ -24,16 +27,18 @@ namespace game
 
         Game();
 
-        void Initialize(int width, int height);
-        void StartGame();
-        void ProcessInput(const std::list<platform::Application::InputType>& events);
-        void Update(float deltaSeconds);
-        void Draw(platform::Renderer& renderer);
+        void Initialize(int width, int height) override;
+        void ProcessInput(const std::list<engine::InputType>& events) override;
+        void Update(float deltaSeconds) override;
+        void Draw(engine::IRenderer& renderer) override;
+        void Dispose() override;
 
         protected:
+
         void CreatePipeAt(size_t id, float x);
         void UpdatePipePosition(size_t id, float delta);
         void UpdateScore(int value);
+        void StartGame();
 
         int _score;
         float _pipesSpace;
